@@ -25,6 +25,7 @@ public class EventManager {
             ps.setDouble(5, event.getPrice());
             ps.setString(6, sdf.format(event.getEventDate()));
             ps.executeUpdate();
+
             ResultSet resultSet = ps.getGeneratedKeys();
             if (resultSet.next()) {
                 int id = resultSet.getInt(1);
@@ -70,6 +71,17 @@ public class EventManager {
         return null;
     }
 
+    public void removeEventById( int id){
+        String sql="delete from event where id"+id;
+
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sql);
+        } catch (SQLException e) {
+           e.printStackTrace();
+        }
+
+    }
 
     private Event getEventFromResultSet(ResultSet resultSet) throws SQLException, ParseException {
         return Event.builder()
